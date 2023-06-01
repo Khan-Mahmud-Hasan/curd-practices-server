@@ -30,7 +30,13 @@ async function run() {
         // const db = client.db(dbName); format
         const coffeeCollection = client.db('myCoffeeDB').collection('myCoffee')
 
-        // get data from UI-client
+        // step-2 read or get data from mongoDB
+        app.get('/coffees', async (req, res) => {
+            const cursor = coffeeCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        })
+        // step-1  get data from UI-client
         app.post('/coffees', async (req, res) => {
             const newCoffee = req.body;
             console.log(newCoffee);
